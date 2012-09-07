@@ -1,8 +1,8 @@
 /************************************************************************
 *************************************************************************
 @Name :       	jRating - jQuery Plugin
-@Revison :    	2.2
-@Date : 		26/01/2011
+@Revison :    	2.3
+@Date : 		07/09/2012
 @Author:     	 ALPIXEL - (www.myjqueryplugins.com - www.alpixel.fr) 
 @License :		 Open Source - MIT License : http://www.opensource.org/licenses/mit-license.php
  

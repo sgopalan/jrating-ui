@@ -89,7 +89,7 @@
 			$(this).css({width: widthRatingContainer,overflow:'hidden',zIndex:1,position:'relative'});
 
 			if(!jDisabled)
-			$(this).bind({
+			$(this).unbind().bind({
 				mouseenter : function(e){
 					var realOffsetLeft = findRealLeft(this);
 					var relativeX = e.pageX - realOffsetLeft;
@@ -128,6 +128,7 @@
 					$("p.jRatingInfos").remove();
 				},
 				click : function(e){
+                    var element = this;
 					$(this).unbind().css('cursor','default').addClass('jDisabled');
 					if (opts.showRateInfo) $("p.jRatingInfos").fadeOut('fast',function(){$(this).remove();});
 					e.preventDefault();
@@ -155,7 +156,7 @@
 								/** Here you can display an alert box, 
 									or use the jNotify Plugin :) http://www.myqjqueryplugins.com/jNotify
 									exemple :	*/
-								if(opts.onSuccess) opts.onSuccess();
+								if(opts.onSuccess) opts.onSuccess( element, rate );
 							}
 							else
 							{
@@ -167,7 +168,7 @@
 								/** Here you can display an alert box, 
 									or use the jNotify Plugin :) http://www.myqjqueryplugins.com/jNotify
 									exemple :	*/
-								if(opts.onError) opts.onError();
+								if(opts.onError) opts.onError( element, rate );
 							}
 						},
 						'json'

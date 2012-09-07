@@ -16,24 +16,24 @@
 			smallStarsPath : 'jquery/icons/small.png', // path of the icon small.png
 			phpPath : 'php/jRating.php', // path of the php file jRating.php
 			type : 'big', // can be set to 'small' or 'big'
-			
+
 			/** Boolean vars **/
 			step:false, // if true,  mouseover binded star by star,
 			isDisabled:false,
 			showRateInfo: true,
-			
+
 			/** Integer vars **/
 			length:5, // number of star to display
 			decimalLength : 0, // number of decimals.. Max 3, but you can complete the function 'getNote'
 			rateMax : 20, // maximal rate - integer from 0 to 9999 (or more)
 			rateInfosX : -45, // relative position in X axis of the info box when mouseover
 			rateInfosY : 5, // relative position in Y axis of the info box when mouseover
-			
+
 			/** Functions **/
 			onSuccess : null,
 			onError : null
 		}; 
-		
+
 		if(this.length>0)
 		return this.each(function() {
 			var opts = $.extend(defaults, op),    
@@ -54,7 +54,7 @@
 			idBox = parseInt($(this).attr('id').split('_')[1]), // get the id of the box
 			widthRatingContainer = starWidth*opts.length, // Width of the Container
 			widthColor = average/opts.rateMax*widthRatingContainer, // Width of the color Container
-			
+
 			quotient = 
 			$('<div>', 
 			{
@@ -63,7 +63,7 @@
 					width:widthColor
 				}
 			}).appendTo($(this)),
-			
+
 			average = 
 			$('<div>', 
 			{
@@ -89,7 +89,7 @@
 			$(this).css({width: widthRatingContainer,overflow:'hidden',zIndex:1,position:'relative'});
 
 			if(!jDisabled)
-			$(this).bind({
+			$(this).unbind().bind({
 				mouseenter : function(e){
 					var realOffsetLeft = findRealLeft(this);
 					var relativeX = e.pageX - realOffsetLeft;
@@ -128,17 +128,18 @@
 					$("p.jRatingInfos").remove();
 				},
 				click : function(e){
+                    var element = this;
 					$(this).unbind().css('cursor','default').addClass('jDisabled');
 					if (opts.showRateInfo) $("p.jRatingInfos").fadeOut('fast',function(){$(this).remove();});
 					e.preventDefault();
 					var rate = getNote(newWidth);
 					average.width(newWidth);
-					
+
 					/** ONLY FOR THE DEMO, YOU CAN REMOVE THIS CODE **/
 						$('.datasSent p').html('<strong>idBox : </strong>'+idBox+'<br /><strong>rate : </strong>'+rate+'<br /><strong>action :</strong> rating');
 						$('.serverResponse p').html('<strong>Loading...</strong>');
 					/** END ONLY FOR THE DEMO **/
-						
+
 					$.post(opts.phpPath,{
 							idBox : idBox,
 							rate : rate,
@@ -150,24 +151,24 @@
 								/** ONLY FOR THE DEMO, YOU CAN REMOVE THIS CODE **/
 									$('.serverResponse p').html(data.server);
 								/** END ONLY FOR THE DEMO **/
-								
-								
+
+
 								/** Here you can display an alert box, 
 									or use the jNotify Plugin :) http://www.myqjqueryplugins.com/jNotify
 									exemple :	*/
-								if(opts.onSuccess) opts.onSuccess();
+								if(opts.onSuccess) opts.onSuccess( element, rate );
 							}
 							else
 							{
-								
+
 								/** ONLY FOR THE DEMO, YOU CAN REMOVE THIS CODE **/
 									$('.serverResponse p').html(data.server);
 								/** END ONLY FOR THE DEMO **/
-								
+
 								/** Here you can display an alert box, 
 									or use the jNotify Plugin :) http://www.myqjqueryplugins.com/jNotify
 									exemple :	*/
-								if(opts.onError) opts.onError();
+								if(opts.onError) opts.onError( element, rate );
 							}
 						},
 						'json'
@@ -206,7 +207,7 @@
 						bgPath = opts.bigStarsPath;
 				}
 			};
-			
+
 			function findRealLeft(obj) {
 			  if( !obj ) return 0;
 			  return obj.offsetLeft + findRealLeft( obj.offsetParent );

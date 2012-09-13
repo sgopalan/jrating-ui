@@ -15,7 +15,6 @@
 			/** String vars **/
 			bigStarsPath : 'jquery/icons/stars.png', // path of the icon stars.png
 			smallStarsPath : 'jquery/icons/small.png', // path of the icon small.png
-			phpPath : 'php/jRating.php', // path of the php file jRating.php
 			type : 'big', // can be set to 'small' or 'big'
 
 			/** Boolean vars **/
@@ -31,8 +30,6 @@
 			rateInfosY : 5, // relative position in Y axis of the info box when mouseover
 
 			/** Functions **/
-			onSuccess : null,
-			onError : null,
 			clickCallback : null
 		}; 
 

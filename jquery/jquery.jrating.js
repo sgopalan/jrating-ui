@@ -18,7 +18,7 @@
 			type : 'big', // can be set to 'small' or 'big'
 
 			/** Boolean vars **/
-			step:false, // if true,  mouseover binded star by star,
+			stepInterval: 0.5,
 			isDisabled:false,
 			showRateInfo: true,
 
@@ -113,8 +113,10 @@
 				mousemove : function(e){
 					var realOffsetLeft = findRealLeft(this);
 					var relativeX = e.pageX - realOffsetLeft;
-					if(opts.step) newWidth = Math.floor(relativeX/starWidth)*starWidth + starWidth;
-					else newWidth = relativeX;
+					// if(opts.step) newWidth = Math.floor(relativeX/starWidth)*starWidth + starWidth;
+					// else newWidth = relativeX;
+					starInterval = starWidth * opts.stepInterval;
+					newWidth = Math.floor(relativeX/starInterval)*starInterval + starInterval;
 					average.width(newWidth);					
 					if (opts.showRateInfo)
 					$("p.jRatingInfos")
@@ -129,8 +131,10 @@
 				click : function(e) {
 					var realOffsetLeft = findRealLeft(this);
 					var relativeX = e.pageX - realOffsetLeft;
-					if(opts.step) newWidth = Math.floor(relativeX/starWidth)*starWidth + starWidth;
-					else newWidth = relativeX;
+					// if(opts.step) newWidth = Math.floor(relativeX/starWidth)*starWidth + starWidth;
+					// else newWidth = relativeX;
+					starInterval = starWidth * opts.stepInterval;
+					newWidth = Math.floor(relativeX/starInterval)*starInterval + starInterval;
 					average.width(newWidth);					
 					currentRating = newWidth / starWidth;
 					if (opts.clickCallback) {

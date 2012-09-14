@@ -13,17 +13,16 @@
 		var currentRating = 0;
 		var defaults = {
 			/** String vars **/
-			starImageUrl : '',
+			starImageUrl : 'icons/star.png',
 			starWidth : 23,
 			starHeight : 20,
 
 			/** Boolean vars **/
 			stepInterval: 0.5,
 			isDisabled:false,
-			showRateInfo: true,
 
 			/** Integer vars **/
-			length:5, // number of star to display
+			length:20, // number of star to display
 			decimalLength : 0, // number of decimals.. Max 3, but you can complete the function 'getNote'
 			rateMax : 20, // maximal rate - integer from 0 to 9999 (or more)
 			rateInfosX : -45, // relative position in X axis of the info box when mouseover
@@ -89,16 +88,6 @@
 				mouseenter : function(e){
 					var realOffsetLeft = findRealLeft(this);
 					var relativeX = e.pageX - realOffsetLeft;
-					if (opts.showRateInfo)
-					var tooltip = 
-					$('<p>',{
-						'class' : 'jRatingInfos',
-						html : getNote(relativeX)+' <span class="maxRate">/ '+opts.rateMax+'</span>',
-						css : {
-							top: (e.pageY + opts.rateInfosY),
-							left: (e.pageX + opts.rateInfosX)
-						}
-					}).appendTo('body').show();
 				},
 				mouseover : function(e){
 					$(this).css('cursor','pointer');	
@@ -113,12 +102,6 @@
 					starInterval = opts.starWidth * opts.stepInterval;
 					newWidth = Math.floor(relativeX/starInterval)*starInterval + starInterval;
 					average.width(newWidth);					
-					if (opts.showRateInfo)
-					$("p.jRatingInfos")
-					.css({
-						left: (e.pageX + opts.rateInfosX)
-					})
-					.html(getNote(newWidth) +' <span class="maxRate">/ '+opts.rateMax+'</span>');
 				},
 				mouseleave : function(){
 					$("p.jRatingInfos").remove();

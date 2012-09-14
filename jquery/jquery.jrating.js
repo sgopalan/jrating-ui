@@ -30,7 +30,6 @@
 			// Total number of stars to display
 			length:20,
 			
-			decimalLength : 0, // number of decimals.. Max 3, but you can complete the function 'getNote'
 			rateMax : 20, // maximal rate - integer from 0 to 9999 (or more)
 
 			/** Functions **/
@@ -123,24 +122,6 @@
 					}
 				}
 			});
-
-			function getNote(relativeX) {
-				var noteBrut = parseFloat((relativeX*100/widthRatingContainer)*opts.rateMax/100);
-				switch(opts.decimalLength) {
-					case 1 :
-						var note = Math.round(noteBrut*10)/10;
-						break;
-					case 2 :
-						var note = Math.round(noteBrut*100)/100;
-						break;
-					case 3 :
-						var note = Math.round(noteBrut*1000)/1000;
-						break;
-					default :
-						var note = Math.round(noteBrut*1)/1;
-				}
-				return note;
-			};
 
 			function findRealLeft(obj) {
 			  if( !obj ) return 0;

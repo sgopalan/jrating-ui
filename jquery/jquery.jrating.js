@@ -13,9 +13,9 @@
 		var currentRating = 0;
 		var defaults = {
 			/** String vars **/
-			bigStarsPath : 'jquery/icons/stars.png', // path of the icon stars.png
-			smallStarsPath : 'jquery/icons/small.png', // path of the icon small.png
-			type : 'big', // can be set to 'small' or 'big'
+			starImageUrl : '',
+			starWidth : 23,
+			starHeight : 20,
 
 			/** Boolean vars **/
 			stepInterval: 0.5,
@@ -37,21 +37,18 @@
 		return this.each(function() {
 			var opts = $.extend(defaults, op),    
 			newWidth = 0,
-			starWidth = 0,
-			starHeight = 0,
-			bgPath = '';
+			bgPath = opts.starImageUrl;
 
 			if($(this).hasClass('jDisabled') || opts.isDisabled)
 				var jDisabled = true;
 			else
 				var jDisabled = false;
 
-			getStarWidth();
-			$(this).height(starHeight);
+			$(this).height(opts.starHeight);
 
 			var average = parseFloat($(this).attr('id').split('_')[0]),
 			idBox = parseInt($(this).attr('id').split('_')[1]), // get the id of the box
-			widthRatingContainer = starWidth*opts.length, // Width of the Container
+			widthRatingContainer = opts.starWidth*opts.length, // Width of the Container
 			widthColor = average/opts.rateMax*widthRatingContainer, // Width of the color Container
 
 			quotient = 
@@ -69,7 +66,7 @@
 				'class' : 'jRatingAverage',
 				css:{
 					width:0,
-					top:- starHeight
+					top:- opts.starHeight
 				}
 			}).appendTo($(this)),
 
@@ -79,8 +76,8 @@
 				'class' : 'jStar',
 				css:{
 					width:widthRatingContainer,
-					height:starHeight,
-					top:- (starHeight*2),
+					height:opts.starHeight,
+					top:- (opts.starHeight*2),
 					background: 'url('+bgPath+') repeat-x'
 				}
 			}).appendTo($(this));
@@ -108,14 +105,12 @@
 				},
 				mouseout : function(){
 					$(this).css('cursor','default');
-					average.width(currentRating * starWidth);
+					average.width(currentRating * opts.starWidth);
 				},
 				mousemove : function(e){
 					var realOffsetLeft = findRealLeft(this);
 					var relativeX = e.pageX - realOffsetLeft;
-					// if(opts.step) newWidth = Math.floor(relativeX/starWidth)*starWidth + starWidth;
-					// else newWidth = relativeX;
-					starInterval = starWidth * opts.stepInterval;
+					starInterval = opts.starWidth * opts.stepInterval;
 					newWidth = Math.floor(relativeX/starInterval)*starInterval + starInterval;
 					average.width(newWidth);					
 					if (opts.showRateInfo)
@@ -131,12 +126,10 @@
 				click : function(e) {
 					var realOffsetLeft = findRealLeft(this);
 					var relativeX = e.pageX - realOffsetLeft;
-					// if(opts.step) newWidth = Math.floor(relativeX/starWidth)*starWidth + starWidth;
-					// else newWidth = relativeX;
-					starInterval = starWidth * opts.stepInterval;
+					starInterval = opts.starWidth * opts.stepInterval;
 					newWidth = Math.floor(relativeX/starInterval)*starInterval + starInterval;
 					average.width(newWidth);					
-					currentRating = newWidth / starWidth;
+					currentRating = newWidth / opts.starWidth;
 					if (opts.clickCallback) {
 						opts.clickCallback(currentRating);
 					}
@@ -159,20 +152,6 @@
 						var note = Math.round(noteBrut*1)/1;
 				}
 				return note;
-			};
-
-			function getStarWidth(){
-				switch(opts.type) {
-					case 'small' :
-						starWidth = 12; // width of the picture small.png
-						starHeight = 10; // height of the picture small.png
-						bgPath = opts.smallStarsPath;
-					break;
-					default :
-						starWidth = 23; // width of the picture stars.png
-						starHeight = 20; // height of the picture stars.png
-						bgPath = opts.bigStarsPath;
-				}
 			};
 
 			function findRealLeft(obj) {

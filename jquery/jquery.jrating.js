@@ -30,8 +30,6 @@
 			// Total number of stars to display
 			length:20,
 			
-			rateMax : 20, // maximal rate - integer from 0 to 9999 (or more)
-
 			/** Functions **/
 			clickCallback : null
 		}; 
@@ -52,7 +50,7 @@
 			var average = parseFloat($(this).attr('id').split('_')[0]),
 			idBox = parseInt($(this).attr('id').split('_')[1]), // get the id of the box
 			widthRatingContainer = opts.starWidth*opts.length, // Width of the Container
-			widthColor = average/opts.rateMax*widthRatingContainer, // Width of the color Container
+			widthColor = average/widthRatingContainer, // Width of the color Container
 
 			quotient = 
 			$('<div>', 

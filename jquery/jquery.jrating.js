@@ -12,21 +12,26 @@
 	$.fn.jRating = function(op) {
 		var currentRating = 0;
 		var defaults = {
-			/** String vars **/
+			// URL to the star image -- an example is in the icons subdirectory of this repository
 			starImageUrl : 'icons/star.png',
+
+			// Dimensions of the star image
 			starWidth : 23,
 			starHeight : 20,
 
-			/** Boolean vars **/
-			stepInterval: 0.5,
+			// Option to enable ratings more granual than integers.  Ex:
+			//    - 0.5 allows ratings of 1.0, 1.5, 2.0, 2.5, etc.
+			//    - 0.25 allows ratings of 1.00, 1.25, 1.50, 1.75, 2.00, etc
+			fractionalRatings: 1.0,
+
+			// Option to make the plugin display-only
 			isDisabled:false,
 
-			/** Integer vars **/
-			length:20, // number of star to display
+			// Total number of stars to display
+			length:20,
+			
 			decimalLength : 0, // number of decimals.. Max 3, but you can complete the function 'getNote'
 			rateMax : 20, // maximal rate - integer from 0 to 9999 (or more)
-			rateInfosX : -45, // relative position in X axis of the info box when mouseover
-			rateInfosY : 5, // relative position in Y axis of the info box when mouseover
 
 			/** Functions **/
 			clickCallback : null
@@ -99,7 +104,7 @@
 				mousemove : function(e){
 					var realOffsetLeft = findRealLeft(this);
 					var relativeX = e.pageX - realOffsetLeft;
-					starInterval = opts.starWidth * opts.stepInterval;
+					starInterval = opts.starWidth * opts.fractionalRatings;
 					newWidth = Math.floor(relativeX/starInterval)*starInterval + starInterval;
 					average.width(newWidth);					
 				},
@@ -109,7 +114,7 @@
 				click : function(e) {
 					var realOffsetLeft = findRealLeft(this);
 					var relativeX = e.pageX - realOffsetLeft;
-					starInterval = opts.starWidth * opts.stepInterval;
+					starInterval = opts.starWidth * opts.fractionalRatings;
 					newWidth = Math.floor(relativeX/starInterval)*starInterval + starInterval;
 					average.width(newWidth);					
 					currentRating = newWidth / opts.starWidth;

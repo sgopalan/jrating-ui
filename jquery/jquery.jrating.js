@@ -53,73 +53,73 @@
 			widthColor = average/widthRatingContainer, // Width of the color Container
 
 			quotient = 
-			$('<div>', 
-			{
-				'class' : 'jRatingColor',
-				css:{
-					width:widthColor
-				}
-			}).appendTo($(this)),
+				$('<div>', 
+					{
+						'class' : 'jRatingColor',
+						css:{
+							width:widthColor
+						}
+					}).appendTo($(this)),
 
 			average = 
-			$('<div>', 
-			{
-				'class' : 'jRatingAverage',
-				css:{
-					width:0,
-					top:- opts.starHeight
-				}
-			}).appendTo($(this)),
+				$('<div>', 
+					{
+						'class' : 'jRatingAverage',
+						css:{
+							width:0,
+							top:- opts.starHeight
+						}
+					}).appendTo($(this)),
 
-			 jstar =
-			$('<div>', 
-			{
-				'class' : 'jStar',
-				css:{
-					width:widthRatingContainer,
-					height:opts.starHeight,
-					top:- (opts.starHeight*2),
-					background: 'url('+bgPath+') repeat-x'
-				}
-			}).appendTo($(this));
+			jstar =
+				$('<div>', 
+					{
+						'class' : 'jStar',
+						css:{
+							width:widthRatingContainer,
+							height:opts.starHeight,
+							top:- (opts.starHeight*2),
+							background: 'url('+bgPath+') repeat-x'
+						}
+					}).appendTo($(this));
 
 			$(this).css({width: widthRatingContainer,overflow:'hidden',zIndex:1,position:'relative'});
 
 			if(!jDisabled)
-			$(this).unbind().bind({
-				mouseenter : function(e){
-					var realOffsetLeft = findRealLeft(this);
-					var relativeX = e.pageX - realOffsetLeft;
-				},
-				mouseover : function(e){
-					$(this).css('cursor','pointer');	
-				},
-				mouseout : function(){
-					$(this).css('cursor','default');
-					average.width(currentRating * opts.starWidth);
-				},
-				mousemove : function(e){
-					var realOffsetLeft = findRealLeft(this);
-					var relativeX = e.pageX - realOffsetLeft;
-					starInterval = opts.starWidth * opts.fractionalRatings;
-					newWidth = Math.floor(relativeX/starInterval)*starInterval + starInterval;
-					average.width(newWidth);					
-				},
-				mouseleave : function(){
-					$("p.jRatingInfos").remove();
-				},
-				click : function(e) {
-					var realOffsetLeft = findRealLeft(this);
-					var relativeX = e.pageX - realOffsetLeft;
-					starInterval = opts.starWidth * opts.fractionalRatings;
-					newWidth = Math.floor(relativeX/starInterval)*starInterval + starInterval;
-					average.width(newWidth);					
-					currentRating = newWidth / opts.starWidth;
-					if (opts.clickCallback) {
-						opts.clickCallback(currentRating);
+				$(this).unbind().bind({
+					mouseenter : function(e){
+						var realOffsetLeft = findRealLeft(this);
+						var relativeX = e.pageX - realOffsetLeft;
+					},
+					mouseover : function(e){
+						$(this).css('cursor','pointer');	
+					},
+					mouseout : function(){
+						$(this).css('cursor','default');
+						average.width(currentRating * opts.starWidth);
+					},
+					mousemove : function(e){
+						var realOffsetLeft = findRealLeft(this);
+						var relativeX = e.pageX - realOffsetLeft;
+						starInterval = opts.starWidth * opts.fractionalRatings;
+						newWidth = Math.floor(relativeX/starInterval)*starInterval + starInterval;
+						average.width(newWidth);					
+					},
+					mouseleave : function(){
+						$("p.jRatingInfos").remove();
+					},
+					click : function(e) {
+						var realOffsetLeft = findRealLeft(this);
+						var relativeX = e.pageX - realOffsetLeft;
+						starInterval = opts.starWidth * opts.fractionalRatings;
+						newWidth = Math.floor(relativeX/starInterval)*starInterval + starInterval;
+						average.width(newWidth);					
+						currentRating = newWidth / opts.starWidth;
+						if (opts.clickCallback) {
+							opts.clickCallback(currentRating);
+						}
 					}
-				}
-			});
+				});
 
 			function findRealLeft(obj) {
 			  if( !obj ) return 0;

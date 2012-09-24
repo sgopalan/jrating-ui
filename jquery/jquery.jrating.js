@@ -1,5 +1,13 @@
 /************************************************************************
 *************************************************************************
+@Name :       	jRating UI (jQuery Plugin)
+@Revison :    	1.0
+@Date : 		09/24/2012
+@Author:     	 tomgeer
+@License :		 Open Source - MIT License : http://www.opensource.org/licenses/mit-license.php
+
+ORIGINAL PROJECT INFO:
+
 @Name :       	jRating - jQuery Plugin
 @Revison :    	2.3
 @Date : 		07/09/2012
